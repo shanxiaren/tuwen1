@@ -1,0 +1,39 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+	<style type="text/css">
+		body, html {width: 100%;height: 100%;margin:0;font-family:"微软雅黑";}
+		#allmap{width:100%;height:500px;}
+		p{margin-left:5px; font-size:14px;}
+	</style>
+	<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=UsulGXIltCbyAEgrNGPIcROpnuPQkzyt&v=2.0&services=false"></script>
+	<title>家乡图文</title>
+</head>
+<body>
+	<div id="allmap"></div>
+	<p>点击标注点，可查看由文本，图片构成的图文表示窗口</p>
+</body>
+</html>
+<script type="text/javascript">
+	// 百度地图API功能
+	var sContent =
+	"<h4 style='margin:0 0 5px 0;padding:0.2em 0'>上寨镇</h4>" + 
+	"<img style='float:right;margin:4px' id='imgDemo' src='http://a2.qpic.cn/psb?/V14dHThv3C8Y7z/cQARIWtq6NB9acWEGwLxzsEqv4hPM.LTWLsp72TuDwg!/b/dPQAAAAAAAAA&bo=oAU4BAAAAAARAK4!&rf=viewer_4'  width='278' height='208' title='上寨镇'/>" + 
+	"<p style='margin:0;line-height:1.5;font-size:13px;text-indent:2em'>上寨镇位于山西省大同市的东南角，坐落于太行山脚下，附近景点有恒山悬空寺、平型关纪念馆...</p>" + 
+	"</div>";
+	var map = new BMap.Map("allmap");
+	var point = new BMap.Point(114.19, 39.13);
+	var marker = new BMap.Marker(point);
+	var infoWindow = new BMap.InfoWindow(sContent);  // 创建信息窗口对象
+	map.centerAndZoom(point, 15);
+	map.addOverlay(marker);
+	marker.addEventListener("click", function(){          
+	   this.openInfoWindow(infoWindow);
+	   //图片加载完毕重绘infowindow
+	   document.getElementById('imgDemo').onload = function (){
+		   infoWindow.redraw();   //防止在网速较慢，图片未加载时，生成的信息框高度比图片的总高度小，导致图片部分被隐藏
+	   }
+	});
+</script>
